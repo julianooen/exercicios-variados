@@ -22,10 +22,19 @@ public class Reservation {
 		return ChronoUnit.DAYS.between(checkin, checkout);
 	}
 
-	public void updateDates(LocalDate checkin, LocalDate checkout) {
+	public String updateDates(LocalDate checkin, LocalDate checkout) {
+		LocalDate now = LocalDate.now();
+		if (checkin.isAfter(checkout)) {
+			return "Check-out date must be after Check-in date";
+		}
+		if (checkin.isBefore(now) || checkout.isBefore(now)) {
+			return "Reservation dates for updates must be future date";
+		}
+		
 		setCheckin(checkin);
 		setCheckout(checkout);
-
+		
+		return null;
 	}
 
 	public Integer getRoomNumber() {
